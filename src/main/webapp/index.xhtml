@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="head">
+    <title>Car list</title>
+    <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body>
+<div jsf:id="helloDiv">
+    <h1>Welcome on cars page!</h1>
+    <br/>
+</div>
+<div jsf:id="carNavi">
+    <form jsf:id="idk">
+        <h:commandButton value="Add car" action="#{carBean.goToAddCar()}"/>
+        <br/>
+        <h:commandButton value="Edit car" action="#{carBean.goToEditCar()}"/>
+        <br/>
+        <h:commandButton value="Delete car" action="#{carBean.goToDeleteCar()}"/>
+        <br/>
+        <h:commandButton value="Cars list sorted by brand" action="#{carBean.goToSortByBrandPage()}"/>
+
+    </form>
+</div>
+
+
+
+<form jsf:id="carForm" jsf:prependId="false">
+    <p>Search car:</p>
+    <input type="text" jsf:id="carFilter" value="#{carBean.filter}">
+        <f:ajax delay="250" execute="@this" render="carList" listener="#{carBean.takeAction()}" event="keyup"/>
+    </input>
+    <br/>
+    <div jsf:id="carList">
+        <ul>
+            <ui:repeat value="#{carBean.allCars}" var="car">
+                <li>#{car.id} : #{car.brand} - #{car.model}</li>
+            </ui:repeat>
+        </ul>
+    </div>
+</form>
+
+<!--<form jsf:id="carSorted" jsf:prependId="false">-->
+<!--    <p>Sort brand car:</p>-->
+<!--    <input type="checkbox" jsf:id="sortedFilter" value="#{carBean.sortedAsc}">-->
+<!--        <f:ajax execute="@this" render="carSortList" listener="#{carBean.sortByBrandAsc()}"/>-->
+<!--    </input>-->
+<!--    <br/>-->
+<!--    <div jsf:id="carSortList">-->
+<!--        <ul>-->
+<!--            <ui:repeat value="#{carBean.allCars}" var="car">-->
+<!--                <li>#{car.id} : #{car.brand} - #{car.model}</li>-->
+<!--            </ui:repeat>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</form>-->
+
+
+</body>
+
+</html>

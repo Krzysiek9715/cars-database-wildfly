@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="editHead">
+   <title>Edit car </title>
+   <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body>
+<div jsf:id="helloDiv">
+   <h1>Edit car from list!</h1>
+   <br/>
+</div>
+
+
+<form jsf:id="carEditForm" jsf:prependId="false">
+   <input jsf:id="carId" type="number" placeholder="Car id number" value="#{carBean.id}"/>
+   <input jsf:id="carBrand" type="text" placeholder="Car brand" value="#{carBean.brand}"/>
+   <input jsf:id="carModel" type="text" placeholder="Car model" value="#{carBean.model}"/>
+   <h:commandButton value="Save" action="#{carBean.editCar()}"/>
+</form>
+
+<div jsf:id="carList">
+   <ul>
+      <ui:repeat value="#{carBean.allCars}" var="car">
+         <li>#{car.id} : #{car.brand} - #{car.model}</li>
+      </ui:repeat>
+   </ul>
+</div>
+</body>
+
+</html>

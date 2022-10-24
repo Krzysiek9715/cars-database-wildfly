@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="deleteHead">
+   <title>Delete car </title>
+   <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body>
+<div jsf:id="helloDiv">
+   <h1>Delete car from list!</h1>
+   <br/>
+</div>
+
+
+<form jsf:id="carDeleteForm" jsf:prependId="false">
+   <input jsf:id="carId" type="number" placeholder="Car id number" value="#{carBean.id}"/>
+   <h:commandButton value="Save" action="#{carBean.confirmDeleteCar()}"/>
+</form>
+
+<div jsf:id="carList">
+   <ul>
+      <ui:repeat value="#{carBean.allCars}" var="car">
+         <li>#{car.id} : #{car.brand} - #{car.model}</li>
+      </ui:repeat>
+   </ul>
+</div>
+</body>
+
+</html>
