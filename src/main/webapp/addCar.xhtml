@@ -6,9 +6,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<head jsf:id="head">
+<head jsf:id="headAddCar">
     <title>Add car to list</title>
     <h:outputStylesheet library="css" name="main.css"/>
+    <style>
+        .error{color:greenyellow}
+    </style>
 </head>
 
 <body>
@@ -19,9 +22,20 @@
 
 
 <form jsf:id="carAddForm" jsf:prependId="false">
-    <input jsf:id="carBrand" type="text" placeholder="Car brand" value="#{carBean.brand}"/>
-    <input jsf:id="carModel" type="text" placeholder="Car model" value="#{carBean.model}"/>
-    <h:commandButton value="Save" action="#{carBean.addCar()}"/>
+
+
+
+
+    <h:panelGrid>
+        <p>Please set brand name</p>
+    <h:inputText id="carBrand" placeholder="Car brand" value="#{carBean.brand}" required="true" requiredMessage="Set value"/>
+        <br/>
+        <p>Please set model name</p>
+    <h:inputText id="carModel" placeholder="Car model" value="#{carBean.model}" required="true" requiredMessage="Set value"/>
+        <br/>
+        <h:commandButton value="Save" action="#{carBean.addCar()}"/>
+        <h:messages styleClass="error"/>
+    </h:panelGrid>
 </form>
 
 

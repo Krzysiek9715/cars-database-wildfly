@@ -4,64 +4,111 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions"
+>
 
 <head jsf:id="head">
     <title>Car list</title>
     <h:outputStylesheet library="css" name="main.css"/>
 </head>
-
 <body>
 <div jsf:id="helloDiv">
     <h1>Welcome on cars page!</h1>
-    <br/>
 </div>
 <div jsf:id="carNavi">
-    <form jsf:id="idk">
-        <h:commandButton value="Add car" action="#{carBean.goToAddCar()}"/>
-        <br/>
-        <h:commandButton value="Edit car" action="#{carBean.goToEditCar()}"/>
-        <br/>
-        <h:commandButton value="Delete car" action="#{carBean.goToDeleteCar()}"/>
-        <br/>
-        <h:commandButton value="Cars list sorted by brand" action="#{carBean.goToSortByBrandPage()}"/>
-
-    </form>
+    <h:panelGrid columns="2" border="1" bgcolor="grey">
+        <form jsf:id="idk">
+            <f:facet name="header">
+            </f:facet>
+            <h:panelGroup style="display:block; text-align:center ">
+                <h5>MENU</h5>
+            </h:panelGroup>
+            <h:panelGroup style="display: inline-block;text-align: center">
+                <h:commandButton value="Add car" action="#{carBean.goToAddCar()}" style="min-width: 10em"/>
+                <!--                <h:commandButton value="Edit car" action="#{carBean.goToEditCar()}" style="min-width: 10em"/>-->
+                <!--                <h:commandButton value="Delete car" action="#{carBean.goToDeleteCar()}" style="min-width: 10em"/>-->
+            </h:panelGroup>
+        </form>
+    </h:panelGrid>
 </div>
 
-
-
 <form jsf:id="carForm" jsf:prependId="false">
-    <p>Search car:</p>
-    <input type="text" jsf:id="carFilter" value="#{carBean.filter}">
-        <f:ajax delay="250" execute="@this" render="carList" listener="#{carBean.takeAction()}" event="keyup"/>
-    </input>
-    <br/>
+    <h:panelGrid columns="2" style="display: inline-block; text-align: center">
+        <p>Search car:</p>
+        <input type="text" jsf:id="carFilter" value="#{carBean.filter}">
+            <f:ajax delay="250" execute="@this" render="carList" listener="#{carBean.takeAction()}" event="keyup"/>
+        </input>
+    </h:panelGrid>
     <div jsf:id="carList">
-        <ul>
-            <ui:repeat value="#{carBean.allCars}" var="car">
-                <li>#{car.id} : #{car.brand} - #{car.model}</li>
-            </ui:repeat>
-        </ul>
+        <h:dataTable value="#{carBean.allCars}" var="car" bgcolor="grey" border="2">
+            <h:column>
+                <f:facet name="header">
+                    <h:commandButton value="ID">
+                    <f:ajax event="click" render="carList" listener="#{carBean.sortByBrandAsc('id')}"/>
+                </h:commandButton> </f:facet>
+                <h:outputText value="#{car.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:commandButton value="BRAND">
+                        <f:ajax event="click" render="carList" listener="#{carBean.sortByBrandAsc('brand')}"/>
+                    </h:commandButton>
+                </f:facet>
+                <h:outputText value="#{car.brand}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:commandButton value="MODEL">
+                        <f:ajax event="click" render="carList" listener="#{carBean.sortByBrandAsc('model')}"/>
+                    </h:commandButton>
+                </f:facet>
+                <h:outputText value="#{car.model}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">TRANSACTION</f:facet>
+                <h:outputText value="#{car.transactionList}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">EDIT</f:facet>
+                <h:commandButton action="#{carBean.editCarById(car.id)}" value="Update"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">DELETE</f:facet>
+                <h:commandButton action="#{carBean.deleteCarById(car.id)}" value="Delete"/>
+            </h:column>
+        </h:dataTable>
     </div>
+
+
 </form>
 
-<!--<form jsf:id="carSorted" jsf:prependId="false">-->
-<!--    <p>Sort brand car:</p>-->
-<!--    <input type="checkbox" jsf:id="sortedFilter" value="#{carBean.sortedAsc}">-->
-<!--        <f:ajax execute="@this" render="carSortList" listener="#{carBean.sortByBrandAsc()}"/>-->
-<!--    </input>-->
-<!--    <br/>-->
-<!--    <div jsf:id="carSortList">-->
-<!--        <ul>-->
-<!--            <ui:repeat value="#{carBean.allCars}" var="car">-->
-<!--                <li>#{car.id} : #{car.brand} - #{car.model}</li>-->
-<!--            </ui:repeat>-->
-<!--        </ul>-->
+
+<h3>Execute a callback script programmatically</h3>
+<h:form>
+    <h:commandButton value="nie wiem po co" action="#{carBean.callback}">
+        <f:ajax/>
+    </h:commandButton>
+</h:form>
+
+
+<!--<form jsf:id="repeatCar" jsf:prependId="false">-->
+
+<!--    <h:commandButton value="Show car list" action="#{carBean.getCarDTOs()}">-->
+<!--        <f:ajax event="click" render="divrepeatCar"/>-->
+<!--    </h:commandButton>-->
+
+<!--    <div jsf:id="divrepeatCar">-->
+<!--        <ui:repeat value="#{carBean.carDTOList}" var="car">-->
+<!--            <li>-->
+<!--                #{car.id} /// #{car.brand} /// #{car.model} ///#{car.transactionList}-->
+<!--            </li>-->
+<!--        </ui:repeat>-->
 <!--    </div>-->
 <!--</form>-->
 
 
 </body>
-
 </html>

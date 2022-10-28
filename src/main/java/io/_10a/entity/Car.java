@@ -3,24 +3,31 @@ package io._10a.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "CARS", schema = "cars")
 //@NamedQuery(name = "Car.sortedByBrand",
 ////        query = "SELECT c FROM Car c ORDER BY c.brand")
 public class Car {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CAR_ID", nullable = false)
     private Long id;
 
     @Column(name = "BRAND")
-    @Pattern(regexp = "[A-Za-z]+",message = "Brand can`t be empty, please input correct brand name")
+    @Pattern(regexp = "[A-Za-z ]{2,}",message = "Brand can`t be empty, please input correct brand name")
     private String brand;
 
     @Column(name = "MODEL")
-    @Pattern(regexp = "[A-Za-z0-9]+",message = "Model can`t be empty, please input correct name")
+    @Pattern(regexp = "[A-Za-z0-9 ]{2,}",message = "Model can`t be empty, please input correct name")
     private String model;
+
+    @OneToMany(mappedBy = "car")
+    protected List<Transaction> transactionList;
 
 
     public Car() {
@@ -53,5 +60,22 @@ public class Car {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                '}';
     }
 }

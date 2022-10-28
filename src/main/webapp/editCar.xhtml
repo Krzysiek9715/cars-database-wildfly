@@ -9,6 +9,9 @@
 <head jsf:id="editHead">
    <title>Edit car </title>
    <h:outputStylesheet library="css" name="main.css"/>
+   <style>
+      .error{color:greenyellow}
+   </style>
 </head>
 
 <body>
@@ -19,19 +22,25 @@
 
 
 <form jsf:id="carEditForm" jsf:prependId="false">
-   <input jsf:id="carId" type="number" placeholder="Car id number" value="#{carBean.id}"/>
-   <input jsf:id="carBrand" type="text" placeholder="Car brand" value="#{carBean.brand}"/>
-   <input jsf:id="carModel" type="text" placeholder="Car model" value="#{carBean.model}"/>
-   <h:commandButton value="Save" action="#{carBean.editCar()}"/>
+   <h:panelGrid>
+   <input jsf:id="carBrand" type="text" placeholder="car brand"  value="#{tmpCarBeanEdit.car.brand}"/>
+      <h:message for="carBrand"/>
+   <input jsf:id="carModel" type="text" placeholder="#car model" value="#{tmpCarBeanEdit.car.model}"/>
+      <h:message for="carModel"/>
+   <h:commandButton value="Save" action="#{tmpCarBeanEdit.save()}"/>
+      <h:outputText value="#{tmpCarBeanEdit.car.id}"/>
+      <h:messages styleClass="error"/>
+   </h:panelGrid>
 </form>
-
+<form jsf:id="resultCarLsist" jsf:prependId="false">
 <div jsf:id="carList">
    <ul>
       <ui:repeat value="#{carBean.allCars}" var="car">
-         <li>#{car.id} : #{car.brand} - #{car.model}</li>
+         <li>#{car.id} : #{car.brand} - #{car.model} </li>
       </ui:repeat>
    </ul>
 </div>
+</form>
 </body>
 
 </html>

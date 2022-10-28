@@ -13,20 +13,27 @@
 
 <body>
 <div jsf:id="helloDiv">
+   <h:panelGrid>
    <h1>Confirm delete car from list!</h1>
    <br/>
    <p>Car to delete:</p>
    <br/>
    <ul>
-      <li>ID: #{carBean.id}</li>
-      <li>BRAND: #{carBean.carToDelete.brand}</li>
-      <li>MODEL: #{carBean.carToDelete.model}</li>
+      <li>ID: #{tmpCarBeanDelete.deleteId}</li>
+      <li>BRAND: #{tmpCarBeanDelete.car.brand}</li>
+      <li>MODEL: #{tmpCarBeanDelete.car.model}</li>
    </ul>
+   </h:panelGrid>
 </div>
 
+<br/>
+
+
 <form jsf:id="carDeleteConfirmForm" jsf:prependId="false">
-   <h:commandButton value="Delete" action="#{carBean.deleteCar()}"/>
+   <h:panelGrid>
+   <h:commandButton value="Delete" action="#{tmpCarBeanDelete.delete()}"/>
    <h:commandButton value="Back to main page" action="index"/>
+   </h:panelGrid>
 </form>
 
 
