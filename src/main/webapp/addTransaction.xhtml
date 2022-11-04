@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="headAddCar">
+   <title>Add transaction for car</title>
+   <h:outputStylesheet library="css" name="main.css"/>
+   <style>
+      .error{color: darkmagenta}
+   </style>
+</head>
+
+<body>
+<div jsf:id="helloDiv">
+   <h1>Add transaction for car: #{transactionBean.carToTransaction.brand} - #{transactionBean.carToTransaction.model}!</h1>
+   <br/>
+</div>
+
+
+<form jsf:id="transactionAddForm" jsf:prependId="false">
+   <h:panelGrid>
+      <p>Please set transaction type</p>
+         <h:selectOneMenu id="selectTypeTransaction" value="#{transactionBean.tratypeEnum}">
+            <f:selectItems value="#{transactionBean.enumList}" var="traType"
+                           itemLabel="#{traType}" itemValue="#{traType}"/>
+         </h:selectOneMenu>
+      <br/>
+      <p>Please set client name</p>
+      <h:inputText id="clientName" placeholder="Client name" value="#{transactionBean.traBeanUser}"/>
+      <br/>
+      <p>Please set transaction date (YYYY-MM-DD)</p>
+      <h:inputText id="transactionDate" placeholder="YYYY-MM-DD" value="#{transactionBean.traBeanDate}"/>
+      <br/>
+      <h:panelGroup id="panel" style="display: inline-block">
+         <h:commandButton value="Save" action="#{transactionBean.addTransaction()}"/>
+      </h:panelGroup>
+      <h:messages styleClass="error"/>
+   </h:panelGrid>
+</form>
+<form jsf:prependId="false" jsf:id="formBackToMain">
+   <h:commandButton value="Back" action="index"/>
+</form>
+
+
+</body>
+
+</html>
+

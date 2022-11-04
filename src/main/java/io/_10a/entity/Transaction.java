@@ -1,6 +1,9 @@
 package io._10a.entity;
 
+import org.hibernate.engine.spi.CascadeStyle;
+
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "TRANSACTION")
@@ -10,14 +13,15 @@ public class Transaction {
     @Column(name = "TRANSACTION_ID", nullable = false)
     private Long transactionId;
 
-    @Column(name = "NAME")
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NAME", length = 8)
+    private TransactionTypeEnum typeEnum;
     @Column(name = "CUSTOMER_NAME")
     private String user;
     @Column(name = "DATE")
-    private String date;
+    private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CAR_ID", referencedColumnName = "CAR_ID", insertable = false, updatable = false)
     protected Car car;
 
@@ -25,9 +29,8 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long transactionId, String name, String user, String date, Car car) {
-        this.transactionId = transactionId;
-        this.name = name;
+    public Transaction(TransactionTypeEnum typeEnum, String user, Date date, Car car) {
+        this.typeEnum = typeEnum;
         this.user = user;
         this.date = date;
         this.car = car;
@@ -41,12 +44,12 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public String getName() {
-        return name;
+    public TransactionTypeEnum getTypeEnum() {
+        return typeEnum;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeEnum(TransactionTypeEnum typeEnum) {
+        this.typeEnum = typeEnum;
     }
 
     public String getUser() {
@@ -57,12 +60,12 @@ public class Transaction {
         this.user = user;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String data) {
-        this.date = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Car getCar() {
@@ -75,11 +78,9 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "transactionId=" + transactionId +
-                ", name='" + name + '\'' +
-                ", user='" + user + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+        return  "Transaction id: " + transactionId +
+                ", type: " + typeEnum +
+                ", client: " + user +
+                ", date: " + date;
     }
 }

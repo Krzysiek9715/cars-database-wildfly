@@ -22,20 +22,22 @@
 
 
 <form jsf:id="carAddForm" jsf:prependId="false">
-
-
-
-
     <h:panelGrid>
-        <p>Please set brand name</p>
-    <h:inputText id="carBrand" placeholder="Car brand" value="#{carBean.brand}" required="true" requiredMessage="Set value"/>
+
+    <p>Please set brand name</p>
+    <h:inputText id="carBrand" placeholder="Car brand" value="#{carBean.brand}" required="false" />
         <br/>
         <p>Please set model name</p>
-    <h:inputText id="carModel" placeholder="Car model" value="#{carBean.model}" required="true" requiredMessage="Set value"/>
+    <h:inputText id="carModel" placeholder="Car model" value="#{carBean.model}" required="false"/>
         <br/>
+        <h:panelGroup id="panel" style="display: inline-block">
         <h:commandButton value="Save" action="#{carBean.addCar()}"/>
+        </h:panelGroup>
         <h:messages styleClass="error"/>
     </h:panelGrid>
+</form>
+<form jsf:prependId="false" jsf:id="formBackToMain">
+    <h:commandButton value="Back" action="index"/>
 </form>
 
 

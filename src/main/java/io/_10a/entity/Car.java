@@ -1,6 +1,4 @@
 package io._10a.entity;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -8,8 +6,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "CARS", schema = "cars")
-//@NamedQuery(name = "Car.sortedByBrand",
-////        query = "SELECT c FROM Car c ORDER BY c.brand")
 public class Car {
 
 
@@ -26,7 +22,7 @@ public class Car {
     @Pattern(regexp = "[A-Za-z0-9 ]{2,}",message = "Model can`t be empty, please input correct name")
     private String model;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     protected List<Transaction> transactionList;
 
 
